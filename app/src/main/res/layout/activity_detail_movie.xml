@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".mains.ActivityDetailMovie">
+
+    <data>
+        <variable
+            name="model"
+            type="com.binarproject.tmdb.viewmodels.ViewModelActivityDetailMovie" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+                android:id="@+id/youtubePlayer"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+
+                app:videoId="@{model.youtubeUrl}"
+                app:autoPlay="false"
+                app:showFullScreenButton="true" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/size_padding"
+                android:id="@+id/linearLayoutHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/youtubePlayer">
+
+                <ImageView
+                    android:scaleType="centerCrop"
+                    android:id="@+id/imgViewPosterMovie"
+                    android:layout_width="130dp"
+                    android:layout_height="180dp"
+                    android:layout_marginLeft="@dimen/size_padding"
+                    android:background="@color/colorPrimary"
+                    android:src="@{model.posterPath}" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_marginLeft="@dimen/size_padding"
+                    android:layout_marginRight="@dimen/size_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_anchor="@id/imgViewPosterMovie">
+
+                    <TextView
+                        android:id="@+id/txtViewTitleMovie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@{model.title}"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imgViewStar"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginRight="@dimen/size_padding"
+                        android:src="@drawable/ic_baseline_star"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleMovie" />
+
+                    <TextView
+                        android:id="@+id/txtViewRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{model.ratings}"
+                        app:layout_constraintLeft_toRightOf="@id/imgViewStar"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleMovie" />
+
+                    <TextView
+                        android:id="@+id/txtViewRatingScale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/10"
+                        app:layout_constraintLeft_toRightOf="@id/txtViewRating"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleMovie" />
+
+                    <TextView
+                        android:id="@+id/txtViewRatingCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{model.voteCount}"
+                        android:textSize="10sp"
+                        app:layout_constraintLeft_toRightOf="@id/imgViewStar"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewRatingScale" />
+
+                    <TextView
+                        android:id="@+id/txtViewGenre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="@{model.genres}"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/imgViewStar" />
+
+                    <TextView
+                        android:id="@+id/txtViewReleaseDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{model.releaseDate}"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewGenre" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutHeader">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutSynopsis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/size_padding"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/txtViewTitleSynopsis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_light"
+                        android:text="@string/title_synopsis"
+                        android:textColor="@color/colorGray"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtViewContentSynopsis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_light"
+                        android:paddingTop="@dimen/size_padding"
+                        android:paddingBottom="@dimen/size_padding"
+                        android:text="@{model.synopsis}"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleSynopsis" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include
+                    android:id="@+id/seperatorDetails"
+                    layout="@layout/layout_lines"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayoutSynopsis" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/size_padding"
+                    app:layout_constraintTop_toBottomOf="@id/seperatorDetails">
+
+                    <TextView
+                        android:id="@+id/txtViewTitleDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_light"
+                        android:paddingBottom="@dimen/size_padding"
+                        android:text="@string/title_details"
+                        android:textColor="@color/colorGray"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <GridLayout
+                        android:layout_weight="1"
+                        android:id="@+id/gridLayoutDetails"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleDetails"
+                        android:columnCount="2"
+                        android:rowCount="7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_columnWeight="0.4"
+                            android:layout_column="0"
+                            android:layout_row="0"
+                            android:id="@+id/txtViewTitleRunTime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@string/title_runtime"
+                            android:textColor="@color/colorGray"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_columnWeight="0.6"
+                            android:layout_column="1"
+                            android:layout_row="0"
+                            android:id="@+id/txtViewRunTime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@{model.runtime}"
+                            android:textColor="@color/colorGray" />
+
+                        <TextView
+                            android:layout_columnWeight="0.4"
+                            android:layout_row="1"
+                            android:layout_column="0"
+                            android:id="@+id/txtViewTitleAdult"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@string/title_adult"
+                            android:textColor="@color/colorGray"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_columnWeight="0.6"
+                            android:layout_row="1"
+                            android:layout_column="1"
+                            android:id="@+id/txtViewAdult"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@{model.adult}"
+                            android:textColor="@color/colorGray" />
+
+                        <TextView
+                            android:layout_columnWeight="0.4"
+                            android:layout_row="2"
+                            android:layout_column="0"
+                            android:id="@+id/txtViewTitleStatus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@string/title_status"
+                            android:textColor="@color/colorGray"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_columnWeight="0.6"
+                            android:layout_row="2"
+                            android:layout_column="1"
+                            android:id="@+id/txtViewStatus"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@{model.status}"
+                            android:textColor="@color/colorGray" />
+
+                        <TextView
+                            android:layout_columnWeight="0.4"
+                            android:layout_row="3"
+                            android:layout_column="0"
+                            android:id="@+id/txtViewTitleCountry"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@string/title_country"
+                            android:textColor="@color/colorGray"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_columnWeight="0.6"
+                            android:layout_row="3"
+                            android:layout_column="1"
+                            android:id="@+id/txtViewCountry"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@{model.country}"
+                            android:textColor="@color/colorGray" />
+
+                        <TextView
+                            android:layout_columnWeight="0.4"
+                            android:layout_row="4"
+                            android:layout_column="0"
+                            android:id="@+id/txtViewTitleCompany"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@string/title_companies"
+                            android:textColor="@color/colorGray"
+                            android:textStyle="bold" />
+
+<!--                        <TextView
+                            android:layout_columnWeight="0.6"
+                            android:layout_row="4"
+                            android:layout_column="1"
+                            android:id="@+id/txtViewCompany"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@{model.companies}"
+                            android:textColor="@color/colorGray" />-->
+
+                        <TextView
+                            android:layout_columnWeight="0.4"
+                            android:layout_row="5"
+                            android:layout_column="0"
+                            android:id="@+id/txtViewTitleLanguage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@string/title_languages"
+                            android:textColor="@color/colorGray"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_columnWeight="0.6"
+                            android:layout_row="5"
+                            android:layout_column="1"
+                            android:id="@+id/txtViewLanguage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@{model.languages}"
+                            android:textColor="@color/colorGray" />
+
+                        <TextView
+                            android:layout_columnWeight="0.4"
+                            android:layout_row="6"
+                            android:layout_column="0"
+                            android:id="@+id/txtViewTitleTagline"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@string/title_tagline"
+                            android:textColor="@color/colorGray"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_columnWeight="0.6"
+                            android:layout_row="6"
+                            android:layout_column="1"
+                            android:id="@+id/txtViewTags"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sans_serif_normal"
+                            android:paddingBottom="8dp"
+                            android:text="@{model.tags}"
+                            android:textColor="@color/colorGray" />
+                    </GridLayout>
+
+                    <!--<TextView
+                        android:id="@+id/txtViewTitleRunTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@string/title_runtime"
+                        android:textColor="@color/colorGray"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleDetails" />
+
+                    <TextView
+                        android:id="@+id/txtViewRunTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@{model.runtime}"
+                        android:textColor="@color/colorGray"
+                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleDetails" />
+
+                    <TextView
+                        android:id="@+id/txtViewTitleAdult"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@string/title_adult"
+                        android:textColor="@color/colorGray"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleRunTime" />
+
+                    <TextView
+                        android:id="@+id/txtViewAdult"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@{model.adult}"
+                        android:textColor="@color/colorGray"
+                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewRunTime" />
+
+                    <TextView
+                        android:id="@+id/txtViewTitleStatus"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@string/title_status"
+                        android:textColor="@color/colorGray"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleAdult" />
+
+                    <TextView
+                        android:id="@+id/txtViewStatus"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@{model.status}"
+                        android:textColor="@color/colorGray"
+                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewAdult" />
+
+                    <TextView
+                        android:id="@+id/txtViewTitleCountry"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@string/title_country"
+                        android:textColor="@color/colorGray"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleStatus" />
+
+                    <TextView
+                        android:id="@+id/txtViewCountry"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@{model.country}"
+                        android:textColor="@color/colorGray"
+                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewStatus" />
+
+                    <TextView
+                        android:id="@+id/txtViewTitleCompany"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@string/title_companies"
+                        android:textColor="@color/colorGray"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleCountry" />
+
+                    <TextView
+                        android:id="@+id/txtViewCompany"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@{model.companies}"
+                        android:textColor="@color/colorGray"
+                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewCountry" />
+
+                    <TextView
+                        android:id="@+id/txtViewTitleLanguage"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@string/title_languages"
+                        android:textColor="@color/colorGray"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleCompany" />
+
+                    <TextView
+                        android:id="@+id/txtViewLanguage"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@{model.languages}"
+                        android:textColor="@color/colorGray"
+                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewCompany" />
+
+                    <TextView
+                        android:id="@+id/txtViewTitleTagline"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@string/title_tagline"
+                        android:textColor="@color/colorGray"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleLanguage" />
+
+                    <TextView
+                        android:id="@+id/txtViewTags"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@{model.tags}"
+                        android:textColor="@color/colorGray"
+                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewLanguage" />-->
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include
+                    android:id="@+id/separatorBoxOffice"
+                    layout="@layout/layout_lines"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayoutDetails" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutBudget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/size_padding"
+                    app:layout_constraintTop_toBottomOf="@id/separatorBoxOffice">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideLineBudget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.3" />
+
+                    <TextView
+                        android:id="@+id/txtViewTitleBoxOffice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_light"
+                        android:paddingBottom="@dimen/size_padding"
+                        android:text="@string/title_boxoffice"
+                        android:textColor="@color/colorGray"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtViewTitleBudget"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@string/title_runtime"
+                        android:textColor="@color/colorGray"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/guideLineBudget"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleBoxOffice" />
+
+                    <TextView
+                        android:id="@+id/txtViewBudget"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@{model.budget}"
+                        android:textColor="@color/colorGray"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@id/guideLineBudget"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleBoxOffice" />
+
+                    <TextView
+                        android:id="@+id/txtViewTitleRevenue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@string/title_budget"
+                        android:textColor="@color/colorGray"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/guideLineBudget"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleBudget" />
+
+                    <TextView
+                        android:id="@+id/txtViewRevenue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sans_serif_normal"
+                        android:paddingBottom="8dp"
+                        android:text="@{model.revenue}"
+                        android:textColor="@color/colorGray"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@id/guideLineBudget"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewBudget" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

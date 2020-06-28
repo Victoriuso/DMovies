@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">TMDB</string>
+
+    <string name="title_synopsis">Synopsis</string>
+    <string name="title_details">Details</string>
+    <string name="title_boxoffice">Box Office</string>
+
+    <string name="title_runtime">Runtime</string>
+    <string name="title_adult">Adult</string>
+    <string name="title_status">Status</string>
+    <string name="title_country">Country</string>
+    <string name="title_companies">Companies</string>
+    <string name="title_languages">Languages</string>
+    <string name="title_tagline">Tags</string>
+    <string name="title_budget">Budget</string>
+    <string name="title_revenue">Revenue</string>
+
+    <string name="title_error">Error</string>
+    <string name="title_success">Success</string>
+</resources>
