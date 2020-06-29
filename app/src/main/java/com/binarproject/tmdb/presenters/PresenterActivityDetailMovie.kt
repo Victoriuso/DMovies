@@ -1,6 +1,7 @@
 package com.binarproject.tmdb.presenters
 
 import com.binarproject.tmdb.contracts.ContractActivityDetailMovie
+import com.binarproject.tmdb.models.ModelListVideos
 import com.binarproject.tmdb.strings.URLCollections
 import com.binarproject.tmdb.utils.ConnectionUtils
 import kotlinx.coroutines.*
@@ -21,9 +22,11 @@ class PresenterActivityDetailMovie : ContractActivityDetailMovie.IPresenter {
                 withContext(Dispatchers.IO) {
                     val modelMovieHeader = api.getMovieDetail(id)
                     val modelListVideos = api.getMovieTrailers(id)
+                    val modelListReview = api.getMovieReviews(id, 1)
 
                     withContext(Dispatchers.Main) {
                         view.mapValue(modelMovieHeader, modelListVideos)
+                        view.mapReviews(modelListReview)
                     }
                 }
             } catch (e: Exception) {

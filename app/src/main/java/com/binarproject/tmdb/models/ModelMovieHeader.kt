@@ -6,7 +6,7 @@ import java.util.*
 data class ModelMovieHeader(
     @SerializedName("adult") val adult: Boolean,
     @SerializedName("backdrop_path") val backdrop_path: String,
-    @SerializedName("belongs_to_collection") val belongs_to_collection: String,
+    @SerializedName("belongs_to_collection") val belongs_to_collection: ModelCollections,
     @SerializedName("budget") val budget: Double,
     @SerializedName("genres") val genres: List<ModelMovieGenre>,
     @SerializedName("homepage") val homepage: String,

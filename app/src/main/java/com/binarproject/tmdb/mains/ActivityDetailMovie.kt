@@ -1,37 +1,51 @@
 package com.binarproject.tmdb.mains
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.binarproject.tmdb.R
+import com.binarproject.tmdb.adapters.recyclerviews.AdapterReviews
 import com.binarproject.tmdb.contracts.ContractActivityDetailMovie
 import com.binarproject.tmdb.databinding.ActivityDetailMovieBinding
 import com.binarproject.tmdb.di.components.DaggerActivityComponent
 import com.binarproject.tmdb.di.modules.ActivityModule
+import com.binarproject.tmdb.models.ModelListReviews
 import com.binarproject.tmdb.models.ModelListVideos
 import com.binarproject.tmdb.models.ModelMovieHeader
+import com.binarproject.tmdb.models.ModelReview
 import com.binarproject.tmdb.strings.URLCollections
 import com.binarproject.tmdb.utils.LayoutUtils
 import com.binarproject.tmdb.viewmodels.ViewModelActivityDetailMovie
 import javax.inject.Inject
 
-class ActivityDetailMovie : AppCompatActivity(), ContractActivityDetailMovie.IView {
+class ActivityDetailMovie : AppCompatActivity(),
+    ContractActivityDetailMovie.IView,
+    View.OnClickListener {
 
     @Inject
     lateinit var presenter: ContractActivityDetailMovie.IPresenter
 
     private lateinit var viewModel: ViewModelActivityDetailMovie
     private lateinit var binding: ActivityDetailMovieBinding
+    private lateinit var adapter: AdapterReviews
+
+    private var reviews: ArrayList<ModelReview> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
         injectDependencies()
+        setRecyclerView()
         setToolbar()
+        toggleRecyclerViewComment(false)
 
         presenter.attach(this)
-        presenter.getDetailMovie("550")
+        presenter.getDetailMovie("299536")
     }
 
     override fun mapValue(modelMovieHeader: ModelMovieHeader, modelListVideos: ModelListVideos) {
@@ -84,6 +98,27 @@ class ActivityDetailMovie : AppCompatActivity(), ContractActivityDetailMovie.IVi
         }
     }
 
+    override fun mapReviews(modelListReview: ModelListReviews) {
+        if (!isFinishing) {
+            var max = 0
+            if (modelListReview.results.size > 5) {
+                max = 5
+            } else {
+                max = modelListReview.results.size
+            }
+
+            if (max == 0) {
+                toggleRecyclerViewComment(false)
+            } else {
+                toggleRecyclerViewComment(true)
+                for (i in 0 until max) {
+                    reviews.add(modelListReview.results[i])
+                }
+                adapter.notifyItemRangeChanged(0, max)
+            }
+        }
+    }
+
     override fun showMessage(b: Boolean, message: String?) {
         val title = when (b) {
             true -> getString(R.string.title_success)
@@ -91,6 +126,25 @@ class ActivityDetailMovie : AppCompatActivity(), ContractActivityDetailMovie.IVi
         }
         if (!isFinishing)
             LayoutUtils.showErrorDialog(this, message.toString(), title)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun onBackPressed() {
+        finish()
+    }
+
+    override fun onClick(view: View?) {
+        view?.let {
+            when (it.id) {
+                R.id.txtViewLoadComment -> openCommentActivity()
+                else -> {
+                }
+            }
+        }
     }
 
     private fun setToolbar() {
@@ -101,13 +155,34 @@ class ActivityDetailMovie : AppCompatActivity(), ContractActivityDetailMovie.IVi
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
+
+    private fun toggleRecyclerViewComment(b: Boolean) {
+        when(b){
+            false -> {
+                binding.recyclerViewComment.visibility = View.GONE
+                binding.txtViewTitleCommentHeader.visibility = View.VISIBLE
+            }
+            true -> {
+                binding.recyclerViewComment.visibility = View.VISIBLE
+                binding.txtViewTitleCommentHeader.visibility = View.GONE
+            }
+        }
     }
 
-    override fun onBackPressed() {
-        finish()
+    private fun setRecyclerView() {
+        adapter = AdapterReviews(reviews)
+        val layoutManager: LinearLayoutManager = LinearLayoutManager(this)
+        val divider: DividerItemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        binding.recyclerViewComment.addItemDecoration(divider)
+        binding.recyclerViewComment.layoutManager = layoutManager
+        binding.recyclerViewComment.isNestedScrollingEnabled = false
+        binding.recyclerViewComment.adapter = adapter
+    }
+
+    private fun openCommentActivity() {
+        val intent = Intent(this, ActivityMovieReviews::class.java)
+        intent.putExtra("id", "299536")
+        startActivity(intent)
     }
 
     private fun injectDependencies() {
@@ -123,6 +198,7 @@ class ActivityDetailMovie : AppCompatActivity(), ContractActivityDetailMovie.IVi
             R.layout.activity_detail_movie
         ).apply {
             this.lifecycleOwner = this@ActivityDetailMovie
+            this.handler = this@ActivityDetailMovie
             model = viewModel
         }
     }

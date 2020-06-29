@@ -14,7 +14,13 @@
     <string name="title_tagline">Tags</string>
     <string name="title_budget">Budget</string>
     <string name="title_revenue">Revenue</string>
+    <string name="title_comment">Comment</string>
+    <string name="title_all_comment">All Comment</string>
 
     <string name="title_error">Error</string>
     <string name="title_success">Success</string>
+    <string name="txt_all_comments">See all comments</string>
+    <string name="txt_no_comment_title">No comment right now</string>
+
+    <string name="txt_loading_reviews">Loading reviews, please wait a minute</string>
 </resources>

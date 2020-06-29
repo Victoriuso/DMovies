@@ -10,5 +10,6 @@ class URLCollections {
 
         const val GET_MOVIE = "movie";
         const val GET_TRAILERS = "videos"
+        const val GET_REVIEWS = "reviews"
     }
 }

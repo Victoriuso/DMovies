@@ -37,8 +37,8 @@ fun setDouble(v: TextView, value: Double?) {
 }
 
 @BindingAdapter("android:text")
-fun setReleaseDate(v: TextView, value: Date? ){
-    if(value == null)
+fun setReleaseDate(v: TextView, value: Date?) {
+    if (value == null)
         v.text = ""
     value?.let {
         val format = SimpleDateFormat("dd-MM-yyyy")
@@ -48,19 +48,28 @@ fun setReleaseDate(v: TextView, value: Date? ){
 }
 
 @BindingAdapter("android:src")
-fun setImageGlide(v: ImageView, value: String? ){
-    if(value != null){
+fun setImageGlide(v: ImageView, value: String?) {
+    if (value != null) {
         Glide.with(v.context).load(value).into(v)
     }
 }
 
 @BindingAdapter("app:videoId")
-fun setYoutubePlayerView(v: YouTubePlayerView, value: String? ){
-    if(value != null){
+fun setYoutubePlayerView(v: YouTubePlayerView, value: String?) {
+    if (value != null) {
         v.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
             override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
                 youTubePlayer.loadVideo(value, 0.0f)
             }
         })
+    }
+}
+
+@BindingAdapter("app:comment_count")
+fun setYoutubePlayerView(v: TextView, value: Int?) {
+    if (value == null) {
+        v.text = "(0)"
+    } else {
+        v.text = "(${value})"
     }
 }

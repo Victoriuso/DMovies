@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="size_padding">15dp</dimen>
+
+    <!--Text Size-->
+    <dimen name="size_header">16sp</dimen>
+    <dimen name="size_content">12sp</dimen>
 </resources>

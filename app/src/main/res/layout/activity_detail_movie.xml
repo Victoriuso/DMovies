@@ -5,9 +5,14 @@
     tools:context=".mains.ActivityDetailMovie">
 
     <data>
+
         <variable
             name="model"
             type="com.binarproject.tmdb.viewmodels.ViewModelActivityDetailMovie" />
+
+        <variable
+            name="handler"
+            type="com.binarproject.tmdb.mains.ActivityDetailMovie" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -35,37 +40,37 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-                app:layout_constraintTop_toBottomOf="@id/appBarLayout"
                 android:id="@+id/youtubePlayer"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-
-                app:videoId="@{model.youtubeUrl}"
                 app:autoPlay="false"
-                app:showFullScreenButton="true" />
+
+                app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+                app:showFullScreenButton="true"
+                app:videoId="@{model.youtubeUrl}" />
 
             <LinearLayout
-                android:layout_marginTop="@dimen/size_padding"
                 android:id="@+id/linearLayoutHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_padding"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/youtubePlayer">
 
                 <ImageView
-                    android:scaleType="centerCrop"
                     android:id="@+id/imgViewPosterMovie"
                     android:layout_width="130dp"
                     android:layout_height="180dp"
                     android:layout_marginLeft="@dimen/size_padding"
                     android:background="@color/colorPrimary"
+                    android:scaleType="centerCrop"
                     android:src="@{model.posterPath}" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_marginLeft="@dimen/size_padding"
-                    android:layout_marginRight="@dimen/size_padding"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_padding"
+                    android:layout_marginRight="@dimen/size_padding"
                     app:layout_anchor="@id/imgViewPosterMovie">
 
                     <TextView
@@ -168,7 +173,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <include
-                    android:id="@+id/seperatorDetails"
+                    android:id="@+id/separatorDetails"
                     layout="@layout/layout_lines"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -179,7 +184,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/size_padding"
-                    app:layout_constraintTop_toBottomOf="@id/seperatorDetails">
+                    app:layout_constraintTop_toBottomOf="@id/separatorDetails">
 
                     <TextView
                         android:id="@+id/txtViewTitleDetails"
@@ -192,21 +197,20 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <GridLayout
-                        android:layout_weight="1"
                         android:id="@+id/gridLayoutDetails"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleDetails"
-                        android:columnCount="2"
-                        android:rowCount="7"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:columnCount="3"
+                        android:rowCount="7"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleDetails">
 
                         <TextView
-                            android:layout_columnWeight="0.4"
-                            android:layout_column="0"
-                            android:layout_row="0"
                             android:id="@+id/txtViewTitleRunTime"
-                            android:layout_width="0dp"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
+                            android:layout_row="0"
+                            android:layout_column="0"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@string/title_runtime"
@@ -214,24 +218,24 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:layout_columnWeight="0.6"
-                            android:layout_column="1"
-                            android:layout_row="0"
+                            android:layout_columnSpan="2"
                             android:id="@+id/txtViewRunTime"
                             android:layout_width="0dp"
+                            android:layout_gravity="fill_horizontal"
                             android:layout_height="wrap_content"
+                            android:layout_row="0"
+                            android:layout_column="1"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@{model.runtime}"
                             android:textColor="@color/colorGray" />
 
                         <TextView
-                            android:layout_columnWeight="0.4"
+                            android:id="@+id/txtViewTitleAdult"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
                             android:layout_row="1"
                             android:layout_column="0"
-                            android:id="@+id/txtViewTitleAdult"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@string/title_adult"
@@ -239,24 +243,25 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:layout_columnWeight="0.6"
-                            android:layout_row="1"
-                            android:layout_column="1"
+                            android:layout_columnSpan="2"
                             android:id="@+id/txtViewAdult"
                             android:layout_width="0dp"
+                            android:layout_gravity="fill_horizontal"
                             android:layout_height="wrap_content"
+                            android:layout_row="1"
+                            android:layout_column="1"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@{model.adult}"
                             android:textColor="@color/colorGray" />
 
                         <TextView
-                            android:layout_columnWeight="0.4"
+                            android:id="@+id/txtViewTitleStatus"
+                            android:layout_width="100dp"
+                            android:layout_gravity="fill_horizontal"
+                            android:layout_height="wrap_content"
                             android:layout_row="2"
                             android:layout_column="0"
-                            android:id="@+id/txtViewTitleStatus"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@string/title_status"
@@ -264,22 +269,24 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:layout_columnWeight="0.6"
+                            android:layout_columnSpan="2"
+                            android:layout_gravity="fill_horizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtViewStatus"
                             android:layout_row="2"
                             android:layout_column="1"
-                            android:id="@+id/txtViewStatus"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@{model.status}"
                             android:textColor="@color/colorGray" />
 
                         <TextView
-                            android:layout_columnWeight="0.4"
+                            android:id="@+id/txtViewTitleCountry"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
                             android:layout_row="3"
                             android:layout_column="0"
-                            android:id="@+id/txtViewTitleCountry"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@string/title_country"
@@ -287,49 +294,49 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:layout_columnWeight="0.6"
-                            android:layout_row="3"
-                            android:layout_column="1"
+                            android:layout_columnSpan="2"
+                            android:layout_gravity="fill_horizontal"
                             android:id="@+id/txtViewCountry"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_row="3"
+                            android:layout_column="1"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@{model.country}"
                             android:textColor="@color/colorGray" />
 
                         <TextView
-                            android:layout_columnWeight="0.4"
+                            android:id="@+id/txtViewTitleCompany"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
                             android:layout_row="4"
                             android:layout_column="0"
-                            android:id="@+id/txtViewTitleCompany"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@string/title_companies"
                             android:textColor="@color/colorGray"
                             android:textStyle="bold" />
 
-<!--                        <TextView
-                            android:layout_columnWeight="0.6"
+                        <TextView
+                            android:layout_gravity="fill_horizontal"
+                            android:layout_columnSpan="2"
+                            android:id="@+id/txtViewCompany"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_row="4"
                             android:layout_column="1"
-                            android:id="@+id/txtViewCompany"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@{model.companies}"
-                            android:textColor="@color/colorGray" />-->
+                            android:textColor="@color/colorGray" />
 
                         <TextView
-                            android:layout_columnWeight="0.4"
+                            android:id="@+id/txtViewTitleLanguage"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
                             android:layout_row="5"
                             android:layout_column="0"
-                            android:id="@+id/txtViewTitleLanguage"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@string/title_languages"
@@ -337,24 +344,24 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:layout_columnWeight="0.6"
-                            android:layout_row="5"
-                            android:layout_column="1"
                             android:id="@+id/txtViewLanguage"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="fill_horizontal"
+                            android:layout_columnSpan="2"
+                            android:layout_row="5"
+                            android:layout_column="1"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@{model.languages}"
                             android:textColor="@color/colorGray" />
 
                         <TextView
-                            android:layout_columnWeight="0.4"
+                            android:id="@+id/txtViewTitleTagline"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
                             android:layout_row="6"
                             android:layout_column="0"
-                            android:id="@+id/txtViewTitleTagline"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@string/title_tagline"
@@ -362,192 +369,19 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:layout_columnWeight="0.6"
-                            android:layout_row="6"
-                            android:layout_column="1"
                             android:id="@+id/txtViewTags"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_row="6"
+                            android:layout_column="1"
+                            android:layout_columnSpan="2"
+                            android:layout_gravity="fill_horizontal"
                             android:fontFamily="@font/sans_serif_normal"
                             android:paddingBottom="8dp"
                             android:text="@{model.tags}"
                             android:textColor="@color/colorGray" />
                     </GridLayout>
 
-                    <!--<TextView
-                        android:id="@+id/txtViewTitleRunTime"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@string/title_runtime"
-                        android:textColor="@color/colorGray"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleDetails" />
-
-                    <TextView
-                        android:id="@+id/txtViewRunTime"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@{model.runtime}"
-                        android:textColor="@color/colorGray"
-                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleDetails" />
-
-                    <TextView
-                        android:id="@+id/txtViewTitleAdult"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@string/title_adult"
-                        android:textColor="@color/colorGray"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleRunTime" />
-
-                    <TextView
-                        android:id="@+id/txtViewAdult"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@{model.adult}"
-                        android:textColor="@color/colorGray"
-                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewRunTime" />
-
-                    <TextView
-                        android:id="@+id/txtViewTitleStatus"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@string/title_status"
-                        android:textColor="@color/colorGray"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleAdult" />
-
-                    <TextView
-                        android:id="@+id/txtViewStatus"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@{model.status}"
-                        android:textColor="@color/colorGray"
-                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewAdult" />
-
-                    <TextView
-                        android:id="@+id/txtViewTitleCountry"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@string/title_country"
-                        android:textColor="@color/colorGray"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleStatus" />
-
-                    <TextView
-                        android:id="@+id/txtViewCountry"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@{model.country}"
-                        android:textColor="@color/colorGray"
-                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewStatus" />
-
-                    <TextView
-                        android:id="@+id/txtViewTitleCompany"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@string/title_companies"
-                        android:textColor="@color/colorGray"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleCountry" />
-
-                    <TextView
-                        android:id="@+id/txtViewCompany"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@{model.companies}"
-                        android:textColor="@color/colorGray"
-                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewCountry" />
-
-                    <TextView
-                        android:id="@+id/txtViewTitleLanguage"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@string/title_languages"
-                        android:textColor="@color/colorGray"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleCompany" />
-
-                    <TextView
-                        android:id="@+id/txtViewLanguage"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@{model.languages}"
-                        android:textColor="@color/colorGray"
-                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewCompany" />
-
-                    <TextView
-                        android:id="@+id/txtViewTitleTagline"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@string/title_tagline"
-                        android:textColor="@color/colorGray"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guideLineDetails"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleLanguage" />
-
-                    <TextView
-                        android:id="@+id/txtViewTags"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@{model.tags}"
-                        android:textColor="@color/colorGray"
-                        app:layout_constraintLeft_toRightOf="@id/guideLineDetails"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewLanguage" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -588,7 +422,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sans_serif_normal"
                         android:paddingBottom="8dp"
-                        android:text="@string/title_runtime"
+                        android:text="@string/title_budget"
                         android:textColor="@color/colorGray"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -614,7 +448,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sans_serif_normal"
                         android:paddingBottom="8dp"
-                        android:text="@string/title_budget"
+                        android:text="@string/title_revenue"
                         android:textColor="@color/colorGray"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -637,6 +471,68 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <include
+                    android:id="@+id/separatorComment"
+                    layout="@layout/layout_lines"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayoutBudget" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/size_padding"
+                    app:layout_constraintTop_toBottomOf="@id/separatorComment">
+
+                    <TextView
+                        android:id="@+id/txtViewTitleComment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_comment"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraitLayoutCommentContent"
+                        android:layout_marginTop="@dimen/size_padding"
+                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textAlignment="center"
+                            android:text="@string/txt_no_comment_title"
+                            android:id="@+id/txtViewTitleCommentHeader"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:id="@+id/recyclerViewComment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/txtViewLoadComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:onClick="@{(v) -> handler.onClick(v)}"
+                        android:paddingTop="@dimen/size_padding"
+                        android:paddingBottom="@dimen/size_padding"
+                        android:text="@string/txt_all_comments"
+                        android:textAlignment="center"
+                        app:layout_constraintTop_toBottomOf="@+id/constraitLayoutCommentContent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

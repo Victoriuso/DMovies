@@ -10,7 +10,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ConnectionUtils {
 
     companion object {
-        fun getApi(token: String?): IJsonApi {
+        fun getApi(token: String? = null): IJsonApi {
+            var usedToken = when(token){
+                null -> URLCollections.TOKEN
+                else -> token
+            }
             val logging = HttpLoggingInterceptor()
             logging.level = HttpLoggingInterceptor.Level.BODY
             val client = OkHttpClient.Builder()
@@ -20,17 +24,13 @@ class ConnectionUtils {
                 .baseUrl(URLCollections.SERVER)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client.build())
-
-            //Add token authorization if token is not null
-            token?.let {
-                builder.client(OkHttpClient.Builder().addInterceptor { chain ->
-                        val request =
-                            chain.request().newBuilder()
-                                .addHeader("Authorization", "Bearer ${it}")
-                                .build()
-                        chain.proceed(request)
-                    }.build())
-            }
+                .client(OkHttpClient.Builder().addInterceptor { chain ->
+                    val request =
+                        chain.request().newBuilder()
+                            .addHeader("Authorization", "Bearer ${usedToken}")
+                            .build()
+                    chain.proceed(request)
+                }.build())
 
             val api = builder.build()
             val service: IJsonApi = api.create(IJsonApi::class.java)
