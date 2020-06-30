@@ -11,5 +11,9 @@ class URLCollections {
         const val GET_MOVIE = "movie";
         const val GET_TRAILERS = "videos"
         const val GET_REVIEWS = "reviews"
+        const val GET_POPULAR_MOVIE = "popular"
+        const val GET_TOP_RATED_MOVIE = "top_rated"
+        const val GET_GENRES = "genre/movie/list"
+        const val GET_DISCOVERED_MOVIE = "discover/movie"
     }
 }

@@ -23,7 +23,9 @@
     <string name="title_success">Success</string>
     <string name="title_latest_movie">Latest Movie</string>
     <string name="title_popular_movie">Popular Movie</string>
+    <string name="title_discover_movie">Discover Movie</string>
 
+    <string name="txt_movie_genre">Discover movie by genre</string>
     <string name="txt_all_comments">See all comments</string>
     <string name="txt_no_comment_title">No comment right now</string>
 

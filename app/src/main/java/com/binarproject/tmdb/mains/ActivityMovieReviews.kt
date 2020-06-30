@@ -75,8 +75,10 @@ class ActivityMovieReviews : AppCompatActivity(), ContractActivityMovieReviews.I
         viewModel.totalComment.value = listReviews.total_results
         for (i in 0 until count) {
             reviews.add(listReviews.results[i])
-            adapter.notifyItemChanged(reviewCount + i)
         }
+        adapter.notifyDataSetChanged()
+        //adapter.notifyItemRangeChanged(0,reviews.size)
+
     }
 
     override fun onBackPressed() {
@@ -90,8 +92,9 @@ class ActivityMovieReviews : AppCompatActivity(), ContractActivityMovieReviews.I
     }
 
     private fun setRecyclerView() {
+        //Popular movie
         adapter = AdapterReviews(reviews)
-        val layoutManager: LinearLayoutManager = LinearLayoutManager(this)
+        val layoutManager: LinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         val divider: DividerItemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.recyclerViewComment.addItemDecoration(divider)
         binding.recyclerViewComment.layoutManager = layoutManager

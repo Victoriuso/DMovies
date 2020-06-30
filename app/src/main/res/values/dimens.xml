@@ -2,6 +2,9 @@
 <resources>
     <dimen name="size_padding">15dp</dimen>
 
+    <!-- Berdasarkan angka-->
+    <dimen name="size_25dp">25dp</dimen>
+
     <!--Text Size-->
     <dimen name="size_header">16sp</dimen>
     <dimen name="size_content">12sp</dimen>

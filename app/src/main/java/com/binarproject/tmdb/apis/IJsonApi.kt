@@ -1,8 +1,6 @@
 package com.binarproject.tmdb.apis
 
-import com.binarproject.tmdb.models.ModelListReviews
-import com.binarproject.tmdb.models.ModelListVideos
-import com.binarproject.tmdb.models.ModelMovieHeader
+import com.binarproject.tmdb.models.*
 import com.binarproject.tmdb.strings.URLCollections
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -25,4 +23,26 @@ interface IJsonApi {
         @Path("id") id: String,
         @Query("page") page: Int
     ): ModelListReviews
+
+    @Headers("Accept:application/json")
+    @GET(URLCollections.GET_MOVIE + "/" + URLCollections.GET_TOP_RATED_MOVIE)
+    suspend fun getTopRatedMovies(
+        @Query("page") page: Int
+    ): ModelListMovies
+
+    @Headers("Accept:application/json")
+    @GET(URLCollections.GET_MOVIE + "/" + URLCollections.GET_POPULAR_MOVIE)
+    suspend fun getPopularMovies(
+        @Query("page") page: Int
+    ): ModelListMovies
+
+    @Headers("Accept:application/json")
+    @GET(URLCollections.GET_GENRES)
+    suspend fun getOfficalGenres(): ModelListGenre
+
+    @Headers("Accept:application/json")
+    @GET(URLCollections.GET_DISCOVERED_MOVIE)
+    suspend fun getDiscoveredMovie(
+        @Query("with_genres") genre: String? = null
+    ): ModelListMovies
 }

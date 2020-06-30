@@ -34,6 +34,7 @@ class ActivityDetailMovie : AppCompatActivity(),
     private lateinit var binding: ActivityDetailMovieBinding
     private lateinit var adapter: AdapterReviews
 
+    private lateinit var id : String
     private var reviews: ArrayList<ModelReview> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +44,9 @@ class ActivityDetailMovie : AppCompatActivity(),
         setRecyclerView()
         setToolbar()
         toggleRecyclerViewComment(false)
-
+        id = intent.getStringExtra("id")
         presenter.attach(this)
-        presenter.getDetailMovie("299536")
+        presenter.getDetailMovie(id)
     }
 
     override fun mapValue(modelMovieHeader: ModelMovieHeader, modelListVideos: ModelListVideos) {
@@ -181,7 +182,7 @@ class ActivityDetailMovie : AppCompatActivity(),
 
     private fun openCommentActivity() {
         val intent = Intent(this, ActivityMovieReviews::class.java)
-        intent.putExtra("id", "299536")
+        intent.putExtra("id", id)
         startActivity(intent)
     }
 
