@@ -14,5 +14,7 @@ class ContractActivityDetailMovie {
         fun mapValue(modelMovieHeader: ModelMovieHeader, modelListVideos: ModelListVideos)
         fun mapReviews(modelListReview: ModelListReviews)
         fun showMessage(b: Boolean, message: String?)
+        fun toggleForm(b: Boolean)
+        fun toggleButtonRefresh(b: Boolean)
     }
 }

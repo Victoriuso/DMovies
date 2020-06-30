@@ -15,6 +15,8 @@ class PresenterActivityDetailMovie : ContractActivityDetailMovie.IPresenter {
     private var parentJob: Job = Job()
 
     override fun getDetailMovie(id: String) {
+        view.toggleForm(false)
+        view.toggleButtonRefresh(false)
         scope = CoroutineScope(Dispatchers.Main + parentJob)
         scope.launch {
             try {
@@ -29,8 +31,10 @@ class PresenterActivityDetailMovie : ContractActivityDetailMovie.IPresenter {
                         view.mapReviews(modelListReview)
                     }
                 }
+                view.toggleForm(true)
             } catch (e: Exception) {
                 view.showMessage(false, e.message)
+                view.toggleButtonRefresh(true)
             }
         }
     }

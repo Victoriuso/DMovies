@@ -24,518 +24,591 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appBarLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </androidx.appcompat.widget.Toolbar>
-
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-                android:id="@+id/youtubePlayer"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                app:autoPlay="false"
-
-                app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-                app:showFullScreenButton="true"
-                app:videoId="@{model.youtubeUrl}" />
-
-            <LinearLayout
-                android:id="@+id/linearLayoutHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_padding"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/youtubePlayer">
-
-                <ImageView
-                    android:id="@+id/imgViewPosterMovie"
-                    android:layout_width="130dp"
-                    android:layout_height="180dp"
-                    android:layout_marginLeft="@dimen/size_padding"
-                    android:background="@color/colorPrimary"
-                    android:scaleType="centerCrop"
-                    android:src="@{model.posterPath}" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_padding"
-                    android:layout_marginRight="@dimen/size_padding"
-                    app:layout_anchor="@id/imgViewPosterMovie">
-
-                    <TextView
-                        android:id="@+id/txtViewTitleMovie"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="5dp"
-                        android:text="@{model.title}"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/imgViewStar"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginRight="@dimen/size_padding"
-                        android:src="@drawable/ic_baseline_star"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleMovie" />
-
-                    <TextView
-                        android:id="@+id/txtViewRating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{model.ratings}"
-                        app:layout_constraintLeft_toRightOf="@id/imgViewStar"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleMovie" />
-
-                    <TextView
-                        android:id="@+id/txtViewRatingScale"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="/10"
-                        app:layout_constraintLeft_toRightOf="@id/txtViewRating"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleMovie" />
-
-                    <TextView
-                        android:id="@+id/txtViewRatingCount"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@{model.voteCount}"
-                        android:textSize="10sp"
-                        app:layout_constraintLeft_toRightOf="@id/imgViewStar"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewRatingScale" />
-
-                    <TextView
-                        android:id="@+id/txtViewGenre"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:text="@{model.genres}"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/imgViewStar" />
-
-                    <TextView
-                        android:id="@+id/txtViewReleaseDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@{model.releaseDate}"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewGenre" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutContent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/linearLayoutHeader">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayoutSynopsis"
+                    android:id="@+id/constraintLayoutHeaderImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/size_padding"
+                    android:layout_height="250dp"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/txtViewTitleSynopsis"
+                    <ImageView
+                        android:id="@+id/imgViewHeader"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_light"
-                        android:text="@string/title_synopsis"
-                        android:textColor="@color/colorGray"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/txtViewContentSynopsis"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_light"
-                        android:paddingTop="@dimen/size_padding"
-                        android:paddingBottom="@dimen/size_padding"
-                        android:text="@{model.synopsis}"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleSynopsis" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <include
-                    android:id="@+id/separatorDetails"
-                    layout="@layout/layout_lines"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    app:layout_constraintTop_toBottomOf="@id/constraintLayoutSynopsis" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayoutDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/size_padding"
-                    app:layout_constraintTop_toBottomOf="@id/separatorDetails">
-
-                    <TextView
-                        android:id="@+id/txtViewTitleDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_light"
-                        android:paddingBottom="@dimen/size_padding"
-                        android:text="@string/title_details"
-                        android:textColor="@color/colorGray"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <GridLayout
-                        android:id="@+id/gridLayoutDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:columnCount="3"
-                        android:rowCount="7"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleDetails">
-
-                        <TextView
-                            android:id="@+id/txtViewTitleRunTime"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="0"
-                            android:layout_column="0"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@string/title_runtime"
-                            android:textColor="@color/colorGray"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_columnSpan="2"
-                            android:id="@+id/txtViewRunTime"
-                            android:layout_width="0dp"
-                            android:layout_gravity="fill_horizontal"
-                            android:layout_height="wrap_content"
-                            android:layout_row="0"
-                            android:layout_column="1"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@{model.runtime}"
-                            android:textColor="@color/colorGray" />
-
-                        <TextView
-                            android:id="@+id/txtViewTitleAdult"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="1"
-                            android:layout_column="0"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@string/title_adult"
-                            android:textColor="@color/colorGray"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_columnSpan="2"
-                            android:id="@+id/txtViewAdult"
-                            android:layout_width="0dp"
-                            android:layout_gravity="fill_horizontal"
-                            android:layout_height="wrap_content"
-                            android:layout_row="1"
-                            android:layout_column="1"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@{model.adult}"
-                            android:textColor="@color/colorGray" />
-
-                        <TextView
-                            android:id="@+id/txtViewTitleStatus"
-                            android:layout_width="100dp"
-                            android:layout_gravity="fill_horizontal"
-                            android:layout_height="wrap_content"
-                            android:layout_row="2"
-                            android:layout_column="0"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@string/title_status"
-                            android:textColor="@color/colorGray"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_columnSpan="2"
-                            android:layout_gravity="fill_horizontal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/txtViewStatus"
-                            android:layout_row="2"
-                            android:layout_column="1"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@{model.status}"
-                            android:textColor="@color/colorGray" />
-
-                        <TextView
-                            android:id="@+id/txtViewTitleCountry"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="3"
-                            android:layout_column="0"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@string/title_country"
-                            android:textColor="@color/colorGray"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_columnSpan="2"
-                            android:layout_gravity="fill_horizontal"
-                            android:id="@+id/txtViewCountry"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="3"
-                            android:layout_column="1"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@{model.country}"
-                            android:textColor="@color/colorGray" />
-
-                        <TextView
-                            android:id="@+id/txtViewTitleCompany"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="4"
-                            android:layout_column="0"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@string/title_companies"
-                            android:textColor="@color/colorGray"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_gravity="fill_horizontal"
-                            android:layout_columnSpan="2"
-                            android:id="@+id/txtViewCompany"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="4"
-                            android:layout_column="1"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@{model.companies}"
-                            android:textColor="@color/colorGray" />
-
-                        <TextView
-                            android:id="@+id/txtViewTitleLanguage"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="5"
-                            android:layout_column="0"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@string/title_languages"
-                            android:textColor="@color/colorGray"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txtViewLanguage"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="fill_horizontal"
-                            android:layout_columnSpan="2"
-                            android:layout_row="5"
-                            android:layout_column="1"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@{model.languages}"
-                            android:textColor="@color/colorGray" />
-
-                        <TextView
-                            android:id="@+id/txtViewTitleTagline"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="6"
-                            android:layout_column="0"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@string/title_tagline"
-                            android:textColor="@color/colorGray"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txtViewTags"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="6"
-                            android:layout_column="1"
-                            android:layout_columnSpan="2"
-                            android:layout_gravity="fill_horizontal"
-                            android:fontFamily="@font/sans_serif_normal"
-                            android:paddingBottom="8dp"
-                            android:text="@{model.tags}"
-                            android:textColor="@color/colorGray" />
-                    </GridLayout>
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <include
-                    android:id="@+id/separatorBoxOffice"
-                    layout="@layout/layout_lines"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    app:layout_constraintTop_toBottomOf="@id/constraintLayoutDetails" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayoutBudget"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/size_padding"
-                    app:layout_constraintTop_toBottomOf="@id/separatorBoxOffice">
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideLineBudget"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.3" />
-
-                    <TextView
-                        android:id="@+id/txtViewTitleBoxOffice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_light"
-                        android:paddingBottom="@dimen/size_padding"
-                        android:text="@string/title_boxoffice"
-                        android:textColor="@color/colorGray"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/txtViewTitleBudget"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@string/title_budget"
-                        android:textColor="@color/colorGray"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guideLineBudget"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleBoxOffice" />
-
-                    <TextView
-                        android:id="@+id/txtViewBudget"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@{model.budget}"
-                        android:textColor="@color/colorGray"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toRightOf="@id/guideLineBudget"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleBoxOffice" />
-
-                    <TextView
-                        android:id="@+id/txtViewTitleRevenue"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@string/title_revenue"
-                        android:textColor="@color/colorGray"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guideLineBudget"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleBudget" />
-
-                    <TextView
-                        android:id="@+id/txtViewRevenue"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sans_serif_normal"
-                        android:paddingBottom="8dp"
-                        android:text="@{model.revenue}"
-                        android:textColor="@color/colorGray"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toRightOf="@id/guideLineBudget"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewBudget" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <include
-                    android:id="@+id/separatorComment"
-                    layout="@layout/layout_lines"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    app:layout_constraintTop_toBottomOf="@id/constraintLayoutBudget" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayoutComment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/size_padding"
-                    app:layout_constraintTop_toBottomOf="@id/separatorComment">
-
-                    <TextView
-                        android:id="@+id/txtViewTitleComment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/title_comment"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@{model.posterPath}" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraitLayoutCommentContent"
-                        android:layout_marginTop="@dimen/size_padding"
-                        app:layout_constraintTop_toBottomOf="@id/txtViewTitleComment"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:background="@color/colorOverlay"></androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            android:textAlignment="center"
-                            android:text="@string/txt_no_comment_title"
-                            android:id="@+id/txtViewTitleCommentHeader"
-                            android:textStyle="bold"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/btnWatchTrailer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_watch_trailer"
+                        android:onClick="@{(v) -> handler.onClick(v)}"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="@string/txt_watch_trailer"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                        </TextView>
+                    </Button>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:id="@+id/recyclerViewComment"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/appBarLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:theme="@style/ToolBarDetailMovie"
+                    app:elevation="0dp"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/txtViewLoadComment"
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolBar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:onClick="@{(v) -> handler.onClick(v)}"
-                        android:paddingTop="@dimen/size_padding"
-                        android:paddingBottom="@dimen/size_padding"
-                        android:text="@string/txt_all_comments"
-                        android:textAlignment="center"
-                        app:layout_constraintTop_toBottomOf="@+id/constraitLayoutCommentContent" />
+                        app:title="">
 
+                    </androidx.appcompat.widget.Toolbar>
+
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:translationY="-30dp"
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayoutHeaderImage">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imgViewPosterMovie"
+                            android:layout_width="130dp"
+                            android:layout_height="180dp"
+                            android:layout_marginLeft="@dimen/size_padding"
+                            android:background="@color/colorPrimary"
+                            android:scaleType="centerCrop"
+                            android:src="@{model.posterPath}" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_padding"
+                            android:layout_marginRight="@dimen/size_padding"
+                            android:translationY="50dp"
+                            app:layout_anchor="@id/imgViewPosterMovie">
+
+                            <TextView
+                                android:id="@+id/txtViewTitleMovie"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="5dp"
+                                android:text="@{model.title}"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imgViewStar"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:layout_marginRight="@dimen/size_padding"
+                                android:src="@drawable/ic_baseline_star"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewTitleMovie" />
+
+                            <TextView
+                                android:id="@+id/txtViewRating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{model.ratings}"
+                                app:layout_constraintLeft_toRightOf="@id/imgViewStar"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewTitleMovie" />
+
+                            <TextView
+                                android:id="@+id/txtViewRatingScale"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/10"
+                                app:layout_constraintLeft_toRightOf="@id/txtViewRating"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewTitleMovie" />
+
+                            <TextView
+                                android:id="@+id/txtViewRatingCount"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@{model.voteCount}"
+                                android:textSize="10sp"
+                                app:layout_constraintLeft_toRightOf="@id/imgViewStar"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewRatingScale" />
+
+                            <TextView
+                                android:id="@+id/txtViewGenre"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:text="@{model.genres}"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/imgViewStar" />
+
+                            <TextView
+                                android:id="@+id/txtViewReleaseDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@{model.releaseDate}"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewGenre" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/linearLayoutHeader">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayoutSynopsis"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/size_padding"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/txtViewTitleSynopsis"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/title_synopsis"
+                                android:textColor="@color/colorGray"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/txtViewContentSynopsis"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="@dimen/size_padding"
+                                android:paddingBottom="@dimen/size_padding"
+                                android:text="@{model.synopsis}"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewTitleSynopsis" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <include
+                            android:id="@+id/separatorDetails"
+                            layout="@layout/layout_lines"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            app:layout_constraintTop_toBottomOf="@id/constraintLayoutSynopsis" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayoutDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/size_padding"
+                            app:layout_constraintTop_toBottomOf="@id/separatorDetails">
+
+                            <TextView
+                                android:id="@+id/txtViewTitleDetails"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/size_padding"
+                                android:text="@string/title_details"
+                                android:textColor="@color/colorGray"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <GridLayout
+                                android:id="@+id/gridLayoutDetails"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:columnCount="3"
+                                android:rowCount="7"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewTitleDetails">
+
+                                <TextView
+                                    android:id="@+id/txtViewTitleRunTime"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="0"
+                                    android:layout_column="0"
+                                    android:paddingBottom="8dp"
+                                    android:text="@string/title_runtime"
+                                    android:textColor="@color/colorGray"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtViewRunTime"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="0"
+                                    android:layout_column="1"
+                                    android:layout_columnSpan="2"
+                                    android:layout_gravity="fill_horizontal"
+                                    android:paddingBottom="8dp"
+                                    android:text="@{model.runtime}"
+                                    android:textColor="@color/colorGray" />
+
+                                <TextView
+                                    android:id="@+id/txtViewTitleAdult"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="1"
+                                    android:layout_column="0"
+                                    android:paddingBottom="8dp"
+                                    android:text="@string/title_adult"
+                                    android:textColor="@color/colorGray"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtViewAdult"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="1"
+                                    android:layout_column="1"
+                                    android:layout_columnSpan="2"
+                                    android:layout_gravity="fill_horizontal"
+                                    android:paddingBottom="8dp"
+                                    android:text="@{model.adult}"
+                                    android:textColor="@color/colorGray" />
+
+                                <TextView
+                                    android:id="@+id/txtViewTitleStatus"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="2"
+                                    android:layout_column="0"
+                                    android:layout_gravity="fill_horizontal"
+                                    android:paddingBottom="8dp"
+                                    android:text="@string/title_status"
+                                    android:textColor="@color/colorGray"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtViewStatus"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="2"
+                                    android:layout_column="1"
+                                    android:layout_columnSpan="2"
+                                    android:layout_gravity="fill_horizontal"
+                                    android:paddingBottom="8dp"
+                                    android:text="@{model.status}"
+                                    android:textColor="@color/colorGray" />
+
+                                <TextView
+                                    android:id="@+id/txtViewTitleCountry"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="3"
+                                    android:layout_column="0"
+                                    android:paddingBottom="8dp"
+                                    android:text="@string/title_country"
+                                    android:textColor="@color/colorGray"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtViewCountry"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="3"
+                                    android:layout_column="1"
+                                    android:layout_columnSpan="2"
+                                    android:layout_gravity="fill_horizontal"
+                                    android:paddingBottom="8dp"
+                                    android:text="@{model.country}"
+                                    android:textColor="@color/colorGray" />
+
+                                <TextView
+                                    android:id="@+id/txtViewTitleCompany"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="4"
+                                    android:layout_column="0"
+                                    android:paddingBottom="8dp"
+                                    android:text="@string/title_companies"
+                                    android:textColor="@color/colorGray"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtViewCompany"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="4"
+                                    android:layout_column="1"
+                                    android:layout_columnSpan="2"
+                                    android:layout_gravity="fill_horizontal"
+
+                                    android:paddingBottom="8dp"
+                                    android:text="@{model.companies}"
+                                    android:textColor="@color/colorGray" />
+
+                                <TextView
+                                    android:id="@+id/txtViewTitleLanguage"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="5"
+                                    android:layout_column="0"
+                                    android:paddingBottom="8dp"
+                                    android:text="@string/title_languages"
+                                    android:textColor="@color/colorGray"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtViewLanguage"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="5"
+                                    android:layout_column="1"
+                                    android:layout_columnSpan="2"
+                                    android:layout_gravity="fill_horizontal"
+
+                                    android:paddingBottom="8dp"
+                                    android:text="@{model.languages}"
+                                    android:textColor="@color/colorGray" />
+
+                                <TextView
+                                    android:id="@+id/txtViewTitleTagline"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="6"
+                                    android:layout_column="0"
+                                    android:paddingBottom="8dp"
+                                    android:text="@string/title_tagline"
+                                    android:textColor="@color/colorGray"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtViewTags"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_row="6"
+                                    android:layout_column="1"
+                                    android:layout_columnSpan="2"
+                                    android:layout_gravity="fill_horizontal"
+                                    android:paddingBottom="8dp"
+                                    android:text="@{model.tags}"
+                                    android:textColor="@color/colorGray" />
+                            </GridLayout>
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <include
+                            android:id="@+id/separatorBoxOffice"
+                            layout="@layout/layout_lines"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            app:layout_constraintTop_toBottomOf="@id/constraintLayoutDetails" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayoutBudget"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/size_padding"
+                            app:layout_constraintTop_toBottomOf="@id/separatorBoxOffice">
+
+                            <androidx.constraintlayout.widget.Guideline
+                                android:id="@+id/guideLineBudget"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layout_constraintGuide_percent="0.3" />
+
+                            <TextView
+                                android:id="@+id/txtViewTitleBoxOffice"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/size_padding"
+                                android:text="@string/title_boxoffice"
+                                android:textColor="@color/colorGray"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/txtViewTitleBudget"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="8dp"
+                                android:text="@string/title_budget"
+                                android:textColor="@color/colorGray"
+                                android:textStyle="bold"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toLeftOf="@id/guideLineBudget"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewTitleBoxOffice" />
+
+                            <TextView
+                                android:id="@+id/txtViewBudget"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="8dp"
+                                android:text="@{model.budget}"
+                                android:textColor="@color/colorGray"
+                                android:textStyle="bold"
+                                app:layout_constraintLeft_toRightOf="@id/guideLineBudget"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewTitleBoxOffice" />
+
+                            <TextView
+                                android:id="@+id/txtViewTitleRevenue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+
+                                android:paddingBottom="8dp"
+                                android:text="@string/title_revenue"
+                                android:textColor="@color/colorGray"
+                                android:textStyle="bold"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toLeftOf="@id/guideLineBudget"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewTitleBudget" />
+
+                            <TextView
+                                android:id="@+id/txtViewRevenue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="8dp"
+                                android:text="@{model.revenue}"
+                                android:textColor="@color/colorGray"
+                                android:textStyle="bold"
+                                app:layout_constraintLeft_toRightOf="@id/guideLineBudget"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewBudget" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <include
+                            android:id="@+id/separatorComment"
+                            layout="@layout/layout_lines"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            app:layout_constraintTop_toBottomOf="@id/constraintLayoutBudget" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayoutComment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/size_padding"
+                            app:layout_constraintTop_toBottomOf="@id/separatorComment">
+
+                            <TextView
+                                android:id="@+id/txtViewTitleComment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/title_comment"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/constraitLayoutCommentContent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/size_padding"
+                                app:layout_constraintTop_toBottomOf="@id/txtViewTitleComment">
+
+                                <TextView
+                                    android:id="@+id/txtViewTitleCommentHeader"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txt_no_comment_title"
+                                    android:textAlignment="center"
+                                    android:textStyle="bold"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                </TextView>
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recyclerViewComment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <TextView
+                                android:id="@+id/txtViewLoadComment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:onClick="@{(v) -> handler.onClick(v)}"
+                                android:paddingTop="@dimen/size_padding"
+                                android:paddingBottom="@dimen/size_padding"
+                                android:text="@string/txt_all_comments"
+                                android:textAlignment="center"
+                                app:layout_constraintTop_toBottomOf="@+id/constraitLayoutCommentContent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutLoading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_padding"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/bg_genre"
+                    android:text="Refresh"
+                    android:id="@+id/btnRefresh"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content">
+
+                </Button>
+
+                <ProgressBar
+                    android:id="@+id/progressBarLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </ProgressBar>
+
+                <TextView
+                    android:layout_marginTop="@dimen/size_padding"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_loading_reviews"
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/progressBarLoading">
+
+                </TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

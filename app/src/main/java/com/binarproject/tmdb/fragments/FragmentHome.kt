@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.binarproject.tmdb.R
 import com.binarproject.tmdb.adapters.recyclerviews.AdapterGenreMovie
 import com.binarproject.tmdb.adapters.recyclerviews.AdapterSimpleMovie
@@ -86,6 +87,7 @@ class FragmentHome : Fragment(), ContractFragmentHome.IView {
     }
 
     override fun mapValueToRvPopularMovie(response: ModelListMovies) {
+        toggleRvPopularMovie(true)
         val size = response.results.size
         val sizeBefore = popularMovies.size
         for (i in 0 until size) {
@@ -104,6 +106,7 @@ class FragmentHome : Fragment(), ContractFragmentHome.IView {
     }
 
     override fun mapValueToRvDiscoveredMovie(response: ModelListMovies) {
+        toggleRvDiscoveredMovie(true)
         val size = response.results.size
         val sizeBefore = discoveredMovie.size
         for (i in 0 until size) {
@@ -113,6 +116,7 @@ class FragmentHome : Fragment(), ContractFragmentHome.IView {
     }
 
     override fun mapValueToRvTopRatedMovie(response: ModelListMovies) {
+        toggleRvTopRatedMovie(true)
         val size = response.results.size
         val sizeBefore = topRatedMovies.size
         for (i in 0 until size) {
@@ -129,9 +133,15 @@ class FragmentHome : Fragment(), ContractFragmentHome.IView {
         binding.recyclerViewPopularMovie.layoutManager = layoutManager
         binding.recyclerViewPopularMovie.isNestedScrollingEnabled = false
         binding.recyclerViewPopularMovie.adapter = adapterPopularMovie
-        binding.nestedScrollViewPopularMovie.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
-            Toast.makeText(context, "asdad", Toast.LENGTH_SHORT).show()
-        }
+        binding.recyclerViewPopularMovie.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dx > 0 && !recyclerView.canScrollHorizontally(RecyclerView.FOCUS_RIGHT) && !isPopularMoviewScroll) {
+                    startGetPopularMovie()
+                }
+            }
+        })
 
 
         //Latest
@@ -140,6 +150,15 @@ class FragmentHome : Fragment(), ContractFragmentHome.IView {
         binding.recyclerViewLatestMovie.layoutManager = layoutManager2
         binding.recyclerViewLatestMovie.isNestedScrollingEnabled = false
         binding.recyclerViewLatestMovie.adapter = adapterLatestMovie
+        binding.recyclerViewLatestMovie.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dx > 0 && !recyclerView.canScrollHorizontally(RecyclerView.FOCUS_RIGHT) && !isTopRatedMoviesScroll) {
+                    startGetTopRatedMovie()
+                }
+            }
+        })
 
 
         //Genre
@@ -158,8 +177,9 @@ class FragmentHome : Fragment(), ContractFragmentHome.IView {
                 if (isDiscoverRunning) {
                     cdt.cancel()
                 }
-                cdt = object : CountDownTimer(1000, 500){
+                cdt = object : CountDownTimer(1000, 500) {
                     override fun onFinish() {
+                        toggleRvDiscoveredMovie(false)
                         isDiscoverRunning = false
                         discoveredMovie.clear()
                         adapterGenreDiscoveredMovie.notifyDataSetChanged()
@@ -186,6 +206,10 @@ class FragmentHome : Fragment(), ContractFragmentHome.IView {
     }
 
     private fun startGetData() {
+        toggleRvPopularMovie(false)
+        toggleRvTopRatedMovie(false)
+        toggleRvDiscoveredMovie(false)
+
         startGetPopularMovie()
         startGetTopRatedMovie()
 
@@ -193,12 +217,53 @@ class FragmentHome : Fragment(), ContractFragmentHome.IView {
         presenter.getDiscoveredMovie(selectedGenre)
     }
 
+    private fun toggleRvTopRatedMovie(b: Boolean) {
+        when (b) {
+            true -> {
+                binding.recyclerViewLatestMovie.visibility = View.VISIBLE
+                binding.progressBarLatestMovie.visibility = View.GONE
+            }
+            false -> {
+                binding.recyclerViewLatestMovie.visibility = View.GONE
+                binding.progressBarLatestMovie.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun toggleRvDiscoveredMovie(b: Boolean) {
+        when (b) {
+            true -> {
+                binding.recyclerViewDiscoveredMovie.visibility = View.VISIBLE
+                binding.progressBarDiscoveredMovie.visibility = View.GONE
+            }
+            false -> {
+                binding.recyclerViewDiscoveredMovie.visibility = View.GONE
+                binding.progressBarDiscoveredMovie.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun toggleRvPopularMovie(b: Boolean) {
+        when (b) {
+            true -> {
+                binding.recyclerViewPopularMovie.visibility = View.VISIBLE
+                binding.progressBarPopularMovie.visibility = View.GONE
+            }
+            false -> {
+                binding.recyclerViewPopularMovie.visibility = View.GONE
+                binding.progressBarPopularMovie.visibility = View.VISIBLE
+            }
+        }
+    }
+
     private fun startGetPopularMovie() {
+        isPopularMoviewScroll = true
         totalPopularMovies++
         presenter.getPopularMovie(totalPopularMovies)
     }
 
     private fun startGetTopRatedMovie() {
+        isTopRatedMoviesScroll = true
         totalTopRatedMovie++
         presenter.getTopRatedMovie(totalTopRatedMovie)
     }

@@ -14,17 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".mains.ActivityMainScreen">
+        <activity android:name=".mains.ActivitySplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".mains.ActivityYoutubeTrailer"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".mains.ActivityMainScreen"></activity>
         <activity android:name=".mains.ActivityMovieReviews" />
-        <activity android:name=".mains.ActivityDetailMovie">
-
-        </activity>
+        <activity android:name=".mains.ActivityDetailMovie" />
     </application>
 
 </manifest>

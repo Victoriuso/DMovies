@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TMDB</string>
+    <string name="app_name">D\'Movies</string>
 
     <string name="title_synopsis">Synopsis</string>
     <string name="title_details">Details</string>
@@ -28,6 +28,7 @@
     <string name="txt_movie_genre">Discover movie by genre</string>
     <string name="txt_all_comments">See all comments</string>
     <string name="txt_no_comment_title">No comment right now</string>
+    <string name="txt_watch_trailer">Watch Trailer</string>
 
     <string name="txt_loading_reviews">Loading reviews, please wait a minute</string>
     <string name="txt_latest_movie_desc">See our latest movie and try to watch it</string>

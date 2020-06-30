@@ -9,6 +9,7 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingBottom="@dimen/size_padding"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -48,45 +49,38 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/nestedScrollViewLatestMovie"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/size_padding"
+                android:id="@+id/constraintLayoutLatestMovie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_padding"
-                android:fillViewport="true"
-                android:isScrollContainer="true"
-                android:measureAllChildren="true"
                 app:layout_constraintTop_toBottomOf="@id/txtViewDescLatestMovie">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewLatestMovie"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingLeft="@dimen/size_padding"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewLatestMovie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:paddingLeft="@dimen/size_padding"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <ProgressBar
+                    android:id="@+id/progressBarLatestMovie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/size_padding"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <ProgressBar
-                        android:id="@+id/progressBarLatestMovie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="@dimen/size_padding"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/recyclerViewLatestMovie"
-                        app:layout_constraintTop_toTopOf="parent">
+                </ProgressBar>
 
-                    </ProgressBar>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.core.widget.NestedScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/txtViewPopularMovie"
@@ -98,7 +92,7 @@
                 android:textSize="@dimen/size_header"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nestedScrollViewLatestMovie">
+                app:layout_constraintTop_toBottomOf="@id/constraintLayoutLatestMovie">
 
             </TextView>
 
@@ -110,43 +104,38 @@
                 android:layout_marginRight="@dimen/size_padding"
                 android:src="@drawable/ic_baseline_arrow_forward"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nestedScrollViewLatestMovie" />
+                app:layout_constraintTop_toBottomOf="@id/constraintLayoutLatestMovie" />
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/nestedScrollViewPopularMovie"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/size_padding"
+                android:id="@+id/constraintLayoutPopularMovie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_padding"
-                android:fillViewport="true"
-                android:isScrollContainer="true"
-                android:measureAllChildren="true"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtViewPopularMovie">
+                app:layout_constraintTop_toBottomOf="@+id/txtViewPopularMovie">
 
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewPopularMovie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingLeft="@dimen/size_padding"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarPopularMovie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/size_padding"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewPopularMovie"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:paddingLeft="@dimen/size_padding"
-                        app:layout_constraintTop_toTopOf="parent" />
+                </ProgressBar>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <ProgressBar
-                        android:id="@+id/progressBarPopularMovie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="@dimen/size_padding">
-
-                    </ProgressBar>
-                </LinearLayout>
-
-            </androidx.core.widget.NestedScrollView>
 
             <TextView
                 android:id="@+id/txtViewDiscoverMovie"
@@ -158,7 +147,7 @@
                 android:textSize="@dimen/size_header"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nestedScrollViewPopularMovie">
+                app:layout_constraintTop_toBottomOf="@id/constraintLayoutPopularMovie">
 
             </TextView>
 
@@ -181,41 +170,36 @@
                 android:paddingLeft="@dimen/size_padding"
                 app:layout_constraintTop_toBottomOf="@id/txtViewDescDiscoverMovie" />
 
-            <androidx.core.widget.NestedScrollView
-                android:isScrollContainer="true"
-                android:measureAllChildren="true"
-                android:id="@+id/nestedScrollViewDiscoverMovie"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/size_padding"
+                app:layout_constraintTop_toBottomOf="@id/recylerViewGenre"
+                android:id="@+id/constraintLayoutDiscoveredMovie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_padding"
-                android:fillViewport="true"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recylerViewGenre">
+                android:orientation="horizontal">
 
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewDiscoveredMovie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingLeft="@dimen/size_padding"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ProgressBar
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/progressBarDiscoveredMovie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/size_padding">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewDiscoveredMovie"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:paddingLeft="@dimen/size_padding"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ProgressBar
-                        android:id="@+id/progressBarDiscoveredMovie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="@dimen/size_padding">
-
-                    </ProgressBar>
-                </LinearLayout>
-
-            </androidx.core.widget.NestedScrollView>
+                </ProgressBar>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,8 +56,12 @@ class ActivityDetailMovie : AppCompatActivity(),
             val languageCount = modelMovieHeader.spoken_languages.size
             val genreCount = modelMovieHeader.genres.size
 
-            if (modelListVideos.results.size > 0)
+            if (modelListVideos.results.size > 0) {
+                binding.btnWatchTrailer.visibility = View.VISIBLE
                 viewModel.youtubeUrl.value = modelListVideos.results[0].key
+            }else {
+                binding.btnWatchTrailer.visibility = View.GONE
+            }
 
             viewModel.title.value = modelMovieHeader.title
             viewModel.posterPath.value =
@@ -129,6 +133,32 @@ class ActivityDetailMovie : AppCompatActivity(),
             LayoutUtils.showErrorDialog(this, message.toString(), title)
     }
 
+    override fun toggleForm(b: Boolean) {
+        when(b){
+            true -> {
+                binding.constraintLayoutContent.visibility = View.VISIBLE
+                binding.constraintLayoutLoading.visibility = View.GONE
+            }
+            false -> {
+                binding.constraintLayoutContent.visibility = View.GONE
+                binding.constraintLayoutLoading.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    override fun toggleButtonRefresh(b: Boolean) {
+        when(b){
+            true -> {
+                binding.btnRefresh.visibility = View.VISIBLE
+                binding.progressBarLoading.visibility = View.GONE
+            }
+            false -> {
+                binding.btnRefresh.visibility = View.GONE
+                binding.progressBarLoading.visibility = View.VISIBLE
+            }
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -142,10 +172,15 @@ class ActivityDetailMovie : AppCompatActivity(),
         view?.let {
             when (it.id) {
                 R.id.txtViewLoadComment -> openCommentActivity()
-                else -> {
-                }
+                R.id.btnWatchTrailer -> openTrailerVideo()
             }
         }
+    }
+
+    private fun openTrailerVideo() {
+        val youtubeTrailer  = Intent(this, ActivityYoutubeTrailer::class.java)
+        youtubeTrailer.putExtra("videoId", viewModel.youtubeUrl.value)
+        startActivity(youtubeTrailer)
     }
 
     private fun setToolbar() {
@@ -153,6 +188,7 @@ class ActivityDetailMovie : AppCompatActivity(),
         supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
             it.setDisplayShowHomeEnabled(true)
+            it.title = ""
         }
     }
 
